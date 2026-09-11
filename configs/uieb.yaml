@@ -1,0 +1,35 @@
+experiment:
+  # 训练检查点和日志统一写入此目录
+  output_dir: outputs
+
+data:
+  # 相对路径以仓库根目录为基准
+  root: datasets/UIEB
+  train_manifest: splits/train.csv
+  val_manifest: splits/val.csv
+  test_manifest: splits/test.csv
+  image_size: 256
+
+model:
+  base_channels: 16
+  # 编码器、瓶颈层和解码器的模块数量
+  depths: [1, 2, 4, 2, 1]
+
+loss:
+  charbonnier_epsilon: 0.001
+  ssim_weight: 0.2
+
+train:
+  seed: 42
+  epochs: 100
+  batch_size: 4
+  accumulation_steps: 2
+  num_workers: 0
+  learning_rate: 0.0002
+  minimum_learning_rate: 0.000001
+  weight_decay: 0.0001
+  gradient_clip: 1.0
+  amp: true
+
+evaluation:
+  batch_size: 1
